@@ -27,7 +27,23 @@ async def fetch():
         )
 
 
-@app.get("/search")
-async def searchAudio():
-    result = 1;
-    return {"matches" : result}
+@app.post("/analyze")
+async def analyze_audio(file: UploadFile = File(...)):
+    try:
+        # Access file metadata
+        filename = file.filename
+        content_type = file.content_type
+
+        if content_type not in ['audio/mpeg', 'audio/wav']:
+            return JSONResponse(status_code=400, content={"error": "Invalid file type"})
+
+        # Read file bytes (if needed)
+        # contents = await file.read()
+
+        # Placeholder for real analysis
+        result = {"filename": filename, "type": content_type, "matches": 1}
+
+        return JSONResponse(content=result)
+
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
