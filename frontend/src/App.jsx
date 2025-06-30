@@ -12,7 +12,7 @@ function App() {
     const selected = e.target.files[0];
     if (selected && (selected.type === 'audio/mpeg' || selected.type === 'audio/wav')) {
       setFile(selected);
-      setApiResponse(''); // Clear any previous output
+      setApiResponse('');
       toast.success('File uploaded successfully');
     } else {
       toast.error('Only .mp3 or .wav files are allowed');
@@ -28,7 +28,7 @@ function App() {
     }
 
     setIsLoading(true);
-    setApiResponse(''); // clear previous results while loading
+    setApiResponse('');
     const formData = new FormData();
     formData.append('file', file);
 
@@ -39,7 +39,7 @@ function App() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setApiResponse(JSON.stringify(res.data, null, 2)); // pretty print response
+      setApiResponse(JSON.stringify(res.data, null, 2));
       toast.success('Analysis complete!');
     } catch (err) {
       if (err.code === 'ECONNABORTED') {
